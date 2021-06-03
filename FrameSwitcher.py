@@ -1,7 +1,5 @@
-import tkinter
 from tkinter import *
 from tkinter.constants import *
-from tkinter import messagebox
 
 
 
@@ -10,6 +8,9 @@ def switchFrame(emptyframe,root):
     root.tkraise()    
     return
 
+def switchAdminFrame(root):
+    root.tkraise()
+    return
 
 
 # def currentFrameCheck(CHECKVALUE):

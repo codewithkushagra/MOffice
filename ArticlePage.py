@@ -1,7 +1,6 @@
 import tkinter
 from tkinter import *
 from tkinter.constants import *
-from tkinter import messagebox
 
 
 def article(root):
