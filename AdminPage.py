@@ -9,6 +9,10 @@ import NewParty
 import ListPage
 import NewGroup
 import WorkEntrySection
+import ReportsPage
+import AllotWorkPage
+import TodaysWorkPage
+import WorkDiaryPage
 
 
 def admin(root):
@@ -30,17 +34,19 @@ def admin(root):
 
     reports=tkinter.Frame(contentframe,bg="white")
     reports.grid(row=0,column=0,sticky=NSEW)
+    ReportsPage.reportList(reports)
 
     allotwork=tkinter.Frame(contentframe,bg="white")
     allotwork.grid(row=0,column=0,sticky=NSEW)
+    AllotWorkPage.allotWorkList(allotwork)
 
     todayswork=tkinter.Frame(contentframe,bg="white")
     todayswork.grid(row=0,column=0,sticky=NSEW)
+    TodaysWorkPage.todaysWorkList(todayswork)
 
-
-    workdairy=tkinter.Frame(contentframe,bg="white")
-    workdairy.grid(row=0,column=0,sticky=NSEW)
-
+    workdiary=tkinter.Frame(contentframe,bg="white")
+    workdiary.grid(row=0,column=0,sticky=NSEW)
+    WorkDiaryPage.workDiaryList(workdiary)
 
     register=tkinter.Frame(contentframe,bg="white")
     register.grid(row=0,column=0,sticky=NSEW)
@@ -68,5 +74,5 @@ def admin(root):
     tkinter.Frame(buttonframe,bg="black").grid(row=0,column=0,rowspan=8,ipady=300,ipadx=100)
     buttonframe.grid(row=0,column=0,rowspan=7,sticky=N)
 
-    AdminButtons.buttonCreate(buttonframe,workentry,list,reports,allotwork,todayswork,workdairy,register)
+    AdminButtons.buttonCreate(buttonframe,workentry,list,reports,allotwork,todayswork,workdiary,register)
     return
