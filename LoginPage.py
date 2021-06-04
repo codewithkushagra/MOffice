@@ -28,8 +28,8 @@ def login(root,adminframe,articleframe,emptyframe):
     loginlabel.grid(row=0,column=0,columnspan=2,sticky=W,pady=10,padx=10)
 
 
-    username=tkinter.Label(root,text="USERNAME")
-    password=tkinter.Label(root,text="PASSWORD")
+    username=tkinter.Label(root,text="Username:")
+    password=tkinter.Label(root,text="Password:")
 
     username.grid(row=1,column=0,sticky=W,pady=10,padx=10)
     password.grid(row=2,column=0,sticky=W,pady=10,padx=10)

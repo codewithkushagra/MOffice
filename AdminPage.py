@@ -65,7 +65,7 @@ def admin(root):
     WorkEntry.enterWork(workentry,newgroup,newparty,workentrysection)
 
     buttonframe=tkinter.Frame(root)
-    tkinter.Frame(buttonframe).grid(row=0,column=0,rowspan=7,ipady=300)
+    tkinter.Frame(buttonframe).grid(row=0,column=0,rowspan=8,ipady=300)
     buttonframe.grid(row=0,column=0,rowspan=7,sticky=N)
 
     AdminButtons.buttonCreate(buttonframe,workentry,list,reports,allotwork,todayswork,workdairy,register)
