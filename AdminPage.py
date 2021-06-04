@@ -6,13 +6,12 @@ import AdminButtons
 import RegistrationPage
 import WorkEntry
 import NewParty
+import ListPage
 import NewGroup
 import WorkEntrySection
 
 
 def admin(root):
-
-
 
 
     contentframe=tkinter.Frame(root)
@@ -27,6 +26,7 @@ def admin(root):
 
     list=tkinter.Frame(contentframe,bg="white")
     list.grid(row=0,column=0,sticky=NSEW)
+    ListPage.workList(list)
 
     reports=tkinter.Frame(contentframe,bg="white")
     reports.grid(row=0,column=0,sticky=NSEW)
@@ -65,7 +65,7 @@ def admin(root):
     WorkEntry.enterWork(workentry,newgroup,newparty,workentrysection)
 
     buttonframe=tkinter.Frame(root)
-    tkinter.Frame(buttonframe).grid(row=0,column=0,rowspan=8,ipady=300)
+    tkinter.Frame(buttonframe,bg="black").grid(row=0,column=0,rowspan=8,ipady=300,ipadx=100)
     buttonframe.grid(row=0,column=0,rowspan=7,sticky=N)
 
     AdminButtons.buttonCreate(buttonframe,workentry,list,reports,allotwork,todayswork,workdairy,register)
