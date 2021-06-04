@@ -1,8 +1,13 @@
 import tkinter
 from tkinter.constants import *
+
+
 import AdminButtons
 import RegistrationPage
-
+import WorkEntry
+import NewParty
+import NewGroup
+import WorkEntrySection
 
 
 def admin(root):
@@ -16,8 +21,6 @@ def admin(root):
     tkinter.Frame(contentframe,bg="white").grid(row=0,column=0,ipady=300,ipadx=350)
 
 
-    workentry=tkinter.Frame(contentframe,bg="white")
-    workentry.grid(row=0,column=0,sticky=NSEW)
 
     workentry=tkinter.Frame(contentframe,bg="white")
     workentry.grid(row=0,column=0,sticky=NSEW)
@@ -42,10 +45,27 @@ def admin(root):
     register=tkinter.Frame(contentframe,bg="white")
     register.grid(row=0,column=0,sticky=NSEW)
     RegistrationPage.registeruser(register)    
+
     
-    tkinter.Frame(root).grid(row=0,column=0,rowspan=7,ipady=300)
+
+    workentrysection=tkinter.Frame(contentframe,bg="white")
+    workentrysection.grid(row=0,column=0,sticky=NSEW)
+    WorkEntrySection.enterWorkIn(workentrysection)
+
+    newparty=tkinter.Frame(contentframe,bg="white")
+    newparty.grid(row=0,column=0,sticky=NSEW)
+    NewParty.newParty(newparty)
+
+    newgroup=tkinter.Frame(contentframe,bg="white")
+    newgroup.grid(row=0,column=0,sticky=NSEW)
+    NewGroup.newGroup(newgroup)
+    
+    workentry=tkinter.Frame(contentframe,bg="white")
+    workentry.grid(row=0,column=0,sticky=NSEW)
+    WorkEntry.enterWork(workentry,newgroup,newparty,workentrysection)
 
     buttonframe=tkinter.Frame(root)
+    tkinter.Frame(buttonframe).grid(row=0,column=0,rowspan=7,ipady=300)
     buttonframe.grid(row=0,column=0,rowspan=7,sticky=N)
 
     AdminButtons.buttonCreate(buttonframe,workentry,list,reports,allotwork,todayswork,workdairy,register)
