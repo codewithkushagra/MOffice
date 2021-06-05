@@ -22,10 +22,10 @@ def drawTable(root):
     def myfunction(event):
         canvas.configure(scrollregion=canvas.bbox("all"),width=580,height=450)
     
-    myframe=tkinter.Frame(root,relief=GROOVE,width=600,height=450,bd=1,bg="white")
+    myframe=tkinter.Frame(root,relief=GROOVE,width=600,height=450,bd=1)
     myframe.place(x=0,y=15)
     canvas=tkinter.Canvas(myframe)
-    frame=tkinter.Frame(canvas,bg="white")
+    frame=tkinter.Frame(canvas)
     myscrollbar=tkinter.Scrollbar(myframe,orient="vertical",command=canvas.yview)
     myscrollbar1=tkinter.Scrollbar(myframe,orient="horizontal",command=canvas.xview)
     canvas.configure(yscrollcommand=myscrollbar.set)

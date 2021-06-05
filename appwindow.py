@@ -6,5 +6,5 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("OFFICE MANAGEMENT")
-        self.geometry('800x600')
+        self.geometry(f'{WIDTH}x{HEIGHT}')
         self.resizable(0,0)
