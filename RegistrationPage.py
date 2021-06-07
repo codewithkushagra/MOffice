@@ -3,13 +3,14 @@ from tkinter.constants import *
 from tkinter import messagebox
 
 import AdminButtons
+import globalvalues
 
 def registeruser(root):
 
     contentframe=tkinter.Frame(root)
-    contentframe.grid(row=0,column=1)
+    contentframe.grid(row=0,column=1,ipadx=globalvalues.HEIGHT,ipady=globalvalues.WIDTH-100)
     
-    tkinter.Label(contentframe,text="ADD NEW USER-").grid(row=0,column=0,sticky=W,pady=7)
+    tkinter.Label(contentframe,text="ADD NEW USER-",font="Time 14").grid(row=0,column=0,sticky=W,pady=7)
     
     tkinter.Label(contentframe,text="Username:").grid(row=1,column=0,sticky=W,pady=7)
     tkinter.Entry(contentframe, bd=1 ,width=20).grid(row=1,column=1,sticky=W,padx=8,pady=5)
@@ -23,7 +24,7 @@ def registeruser(root):
     tkinter.Entry(contentframe, bd=1 ,width=20,show='*').grid(row=3,column=1,sticky=W,padx=8,pady=5)
     
     staffdegination=tkinter.StringVar(contentframe)
-    staffdeginationlist = ["CA","Accountant","Article"]
+    staffdeginationlist = ["Boss","Dept Head","Executive","Accountant","Article","other staff"]
     staffdegination.set("None")
     tkinter.Label(contentframe,text="Degination:").grid(row=4,column=0,sticky=W)
     tkinter.OptionMenu(contentframe,staffdegination,*staffdeginationlist).grid(row=4,column=1,sticky=W,padx=8)
@@ -37,8 +38,8 @@ def registeruser(root):
     tkinter.Button(contentframe,text="Save").grid(row=7,columnspan=2,pady=20)
 
     buttonframe=tkinter.Frame(root)
-    tkinter.Frame(buttonframe,relief=RIDGE,borderwidth=2).grid(row=0,column=0,rowspan=8,ipady=300,ipadx=100)
-    buttonframe.grid(row=0,column=0,rowspan=7,sticky=N)
+    tkinter.Frame(buttonframe,relief=RIDGE,borderwidth=2,bg="red").grid(row=0,column=0,rowspan=40,ipady=globalvalues.HEIGHT,ipadx=100)
+    buttonframe.grid(row=0,column=0,rowspan=40,sticky=N)
 
 
     AdminButtons.buttonCreate(buttonframe,contentframe,root)

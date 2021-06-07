@@ -3,12 +3,14 @@ from tkinter.constants import *
 
 import WorkEntry
 
+import globalvalues
 
 
 def admin(root):
 
     adminpageframe=tkinter.Frame(root)
-    adminpageframe.grid(row=0, column=0)
+    adminpageframe.grid(row=0, column=0, sticky=NSEW,ipadx=globalvalues.WIDTH,ipady=globalvalues.HEIGHT)
+
 
     
 

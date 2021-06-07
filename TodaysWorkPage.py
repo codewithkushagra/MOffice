@@ -4,15 +4,16 @@ from tkinter.constants import *
 import StaticTable
 
 import AdminButtons
-
+import globalvalues
+import DBMSGetData
 
 def todaysWorkList(root):
 
 
     contentframe=tkinter.Frame(root)
-    contentframe.grid(row=0,column=1)    
+    contentframe.grid(row=0,column=1,ipadx=globalvalues.HEIGHT,ipady=globalvalues.WIDTH-100) 
 
-    tkinter.Label(contentframe,text="Today's Work-").grid(row=0,column=0,sticky=W,pady=7)
+    tkinter.Label(contentframe,text="Today's Work-",font="Time 14").grid(row=0,column=0,sticky=W,pady=7)
 
     groupnameselected=tkinter.StringVar(contentframe)
     groupnamelist = ["sample1","sample1"]
@@ -22,13 +23,13 @@ def todaysWorkList(root):
 
 
     tableframe=tkinter.Frame(contentframe)
-    tableframe.grid(row=3,column=0,sticky=W,ipady=250,ipadx=350,columnspan=25)
-    StaticTable.drawTable(tableframe)
+    tableframe.grid(row=4,column=0,sticky=W,ipadx=globalvalues.WIDTH-300,ipady=globalvalues.HEIGHT-200,columnspan=25)
+    StaticTable.drawTable(tableframe,DBMSGetData.getAllData("RECEIVEDWORK"))
 
 
     buttonframe=tkinter.Frame(root)
-    tkinter.Frame(buttonframe,relief=RIDGE,borderwidth=2).grid(row=0,column=0,rowspan=8,ipady=300,ipadx=100)
-    buttonframe.grid(row=0,column=0,rowspan=7,sticky=N)
+    tkinter.Frame(buttonframe,relief=RIDGE,borderwidth=2,bg="red").grid(row=0,column=0,rowspan=40,ipady=globalvalues.HEIGHT,ipadx=100)
+    buttonframe.grid(row=0,column=0,rowspan=40,sticky=N)
 
     AdminButtons.buttonCreate(buttonframe,contentframe,root)
 

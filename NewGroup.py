@@ -4,7 +4,7 @@ from tkinter import messagebox
 
 import AdminButtons
 import DBMSSaveData
-
+import globalvalues
 
 
 def saveNewGroup(groupname,partyname,pannumber,address,groupnamevar,partynamevar,pannumbervar,addressvar):
@@ -23,7 +23,7 @@ def saveNewGroup(groupname,partyname,pannumber,address,groupnamevar,partynamevar
 def newGroup(root):
     
     contentframe=tkinter.Frame(root)
-    contentframe.grid(row=0,column=1)
+    contentframe.grid(row=0,column=1,ipadx=globalvalues.HEIGHT,ipady=globalvalues.WIDTH-100)
 
 
     groupname=tkinter.StringVar(root)
@@ -31,7 +31,7 @@ def newGroup(root):
     pannumber=tkinter.StringVar(root)
     address=tkinter.StringVar(root)
 
-    tkinter.Label(contentframe,text="ADD NEW GROUP-").grid(row=0,column=0,sticky=W,pady=7)
+    tkinter.Label(contentframe,text="ADD NEW GROUP-",font="Time 14").grid(row=0,column=0,sticky=W,pady=7)
 
     tkinter.Label(contentframe,text="Group Name:").grid(row=1,column=0,sticky=W,pady=7)
     tkinter.Entry(contentframe, bd=1 ,width=20,textvariable=groupname).grid(row=1,column=1,sticky=W,padx=8,pady=5)
@@ -48,9 +48,8 @@ def newGroup(root):
     tkinter.Button(contentframe,text="Save",command=lambda:saveNewGroup(groupname.get(),partyname.get(),pannumber.get(),address.get(),groupname,partyname,pannumber,address ) ).grid(row=5,columnspan=2,pady=20)
 
     buttonframe=tkinter.Frame(root)
-    tkinter.Frame(buttonframe,relief=RIDGE,borderwidth=2).grid(row=0,column=0,rowspan=8,ipady=300,ipadx=100)
-
-    buttonframe.grid(row=0,column=0,rowspan=7,sticky=N)
+    tkinter.Frame(buttonframe,relief=RIDGE,borderwidth=2,bg="red").grid(row=0,column=0,rowspan=40,ipady=globalvalues.HEIGHT,ipadx=100)
+    buttonframe.grid(row=0,column=0,rowspan=40,sticky=N)
 
 
     AdminButtons.buttonCreate(buttonframe,contentframe,root)
