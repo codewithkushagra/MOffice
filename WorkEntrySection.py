@@ -1,12 +1,16 @@
 import tkinter
 from tkinter.constants import *
 from tkinter import messagebox
+from tkinter import ttk
+
 import globalvalues
 import DBMSGetData
 import DBMSSaveData
 import AdminButtonGlobal
 import FrameSwitcher
 
+partynamemenu=ttk.Combobox
+groupnamemenu=ttk.Combobox
 
 
 
@@ -19,21 +23,24 @@ def getPANAdress(partynameselected,groupnameselected,panlabel,addresslabel):
 
 
 
-def getPARTYMENU(partynameselected,groupnameselected,contentframe,panlabel,addresslabel):
+def getPartyNameMenu(groupnameselected,panlabel,addresslabel):
     
-    AdminButtonGlobal.PARTYMENU.destroy()    
+    global partynamemenu
     partynamelist = []
     
-    if not partynamelist:
-        partynamelist.append("None")
     
     for i in DBMSGetData.getWhereData("GROUPANDPARTYDETAILS","PARTYNAME","GROUPNAME",groupnameselected):
         partynamelist.append(i[0])
+    
+    if not partynamelist:
+        partynamelist.append("None")
+
+    partynamemenu['value']=partynamelist
+    partynamemenu.set("None")
+
     panlabel["text"]="-"
     addresslabel["text"]="-"
-    partynameselected.set("None")
-    AdminButtonGlobal.PARTYMENU=tkinter.OptionMenu(contentframe,partynameselected,*partynamelist,command=lambda event=0:getPANAdress(partynameselected.get(),groupnameselected,panlabel,addresslabel))
-    AdminButtonGlobal.PARTYMENU.grid(row=2,column=1,sticky=W,padx=8,pady=3)
+    
     
     return
 
@@ -53,11 +60,18 @@ def saveWorkEntry(contentframe,root,departmenttype,departmenttypec,pannumber,dep
 
 
 
-def getDepartmentTypeCList(contentframe,departmenttypemenu,departmentnameselected,departmenttype,departmenttypeclabel,departmenttypec,departmenttypecmenu):
+def getDepartmentTypeCList(contentframe,departmenttype,departmenttypeclabel,departmentnameselected,departmenttypec):
     
-    departmenttypemenu.destroy()
+    try:
+        AdminButtonGlobal.DEPARTMENTTYPECNAMEMENU.destroy()
+    except:
+        pass
+    
 
-    tkinter.Label(contentframe,text=departmenttype).grid(row=6,column=1,sticky=W,padx=8,pady=3)
+    try:
+        AdminButtonGlobal.DEPARTMENTTYPECNAMEENTRY.destroy()
+    except:
+        pass
 
     entryboxlist=["Return","Scruitny","Notice","Tax Audit","Other Statutary Audit","Other Report"]
     
@@ -65,44 +79,52 @@ def getDepartmentTypeCList(contentframe,departmenttypemenu,departmentnameselecte
 
     if departmenttype in entryboxlist and (departmentnameselected !="TDS" or departmenttype=="Notice"):
         departmenttypec.set("")
-        departmenttypecmenu=tkinter.Entry(contentframe, bd=1 ,width=10,textvariable=departmenttypec)
-        departmenttypecmenu.grid(row=7,column=1,sticky=W,padx=8,pady=3)
+        AdminButtonGlobal.DEPARTMENTTYPECNAMEENTRY=tkinter.Entry(contentframe, bd=1 ,width=10,textvariable=departmenttypec)
+        AdminButtonGlobal.DEPARTMENTTYPECNAMEENTRY.grid(row=7,column=1,sticky=W,padx=8,pady=3)
 
     elif departmenttype=="Appeal":
         
         departmenttypeclist=["First Appeal","Second Appeal"]
-        departmenttypecmenu=tkinter.OptionMenu(contentframe,departmenttypec,*departmenttypeclist)
-        departmenttypecmenu.grid(row=7,column=1,sticky=W,padx=8,pady=3)
+        AdminButtonGlobal.DEPARTMENTTYPECNAMEMENU=tkinter.OptionMenu(contentframe,departmenttypec,*departmenttypeclist)
+        AdminButtonGlobal.DEPARTMENTTYPECNAMEMENU.grid(row=7,column=1,sticky=W,padx=8,pady=3)
     
     elif departmentnameselected=="TDS" and departmenttype=="Return":
         
         departmenttypeclist=["24-Q Quater1","24-Q Quater2","24-Q Quater3","24-Q Quater4","26-Q Quater1","26-Q Quater2","26-Q Quater3","26-Q Quater4","revised","other"]
-        departmenttypecmenu=tkinter.OptionMenu(contentframe,departmenttypec,*departmenttypeclist)
-        departmenttypecmenu.grid(row=7,column=1,sticky=W,padx=8,pady=3)
+        AdminButtonGlobal.DEPARTMENTTYPECNAMEMENU=tkinter.OptionMenu(contentframe,departmenttypec,*departmenttypeclist)
+        AdminButtonGlobal.DEPARTMENTTYPECNAMEMENU.grid(row=7,column=1,sticky=W,padx=8,pady=3)
     
     elif departmenttype=="New Project":
 
         departmenttypeclist=["T.L. & C.C.","T.L.","C.C.","Other"]
-        departmenttypecmenu=tkinter.OptionMenu(contentframe,departmenttypec,*departmenttypeclist)
-        departmenttypecmenu.grid(row=7,column=1,sticky=W,padx=8,pady=3)
+        AdminButtonGlobal.DEPARTMENTTYPECNAMEMENU=tkinter.OptionMenu(contentframe,departmenttypec,*departmenttypeclist)
+        AdminButtonGlobal.DEPARTMENTTYPECNAMEMENU.grid(row=7,column=1,sticky=W,padx=8,pady=3)
 
     elif departmenttype=="Renewal":
         
         departmenttypeclist=["Projection","CMA"]
-        departmenttypecmenu=tkinter.OptionMenu(contentframe,departmenttypec,*departmenttypeclist)
-        departmenttypecmenu.grid(row=7,column=1,sticky=W,padx=8,pady=3)
+        AdminButtonGlobal.DEPARTMENTTYPECNAMEMENU=tkinter.OptionMenu(contentframe,departmenttypec,*departmenttypeclist)
+        AdminButtonGlobal.DEPARTMENTTYPECNAMEMENU.grid(row=7,column=1,sticky=W,padx=8,pady=3)
 
 
     return
 
 
 
-def getDepartmentTypeList(contentframe,departmentnamemenu,departmenttypelabel,departmenttypeclabel,departmentnameselected,departmenttype,departmenttypec,departmenttypemenu,departmenttypecmenu):
+def getDepartmentTypeList(contentframe,departmenttype,departmentnameselected,departmenttypelabel,departmenttypeclabel,departmenttypec):
     
-    departmentnamemenu.destroy()
-    departmenttypemenu.destroy()
-    departmenttypecmenu.destroy()
-    tkinter.Label(contentframe,text=departmentnameselected).grid(row=5,column=1,sticky=W,padx=8,pady=3)
+    AdminButtonGlobal.DEPARTMENTTYPENAMEMENU.destroy()
+    departmenttypeclabel["text"]="-"
+    try:
+        AdminButtonGlobal.DEPARTMENTTYPECNAMEMENU.destroy()
+    except:
+        pass
+    
+    try:
+        AdminButtonGlobal.DEPARTMENTTYPECNAMEENTRY.destroy()
+    except:
+        pass
+
 
     departmenttype.set("None")
     departmenttypelabel["text"]=departmentnameselected+":"
@@ -110,50 +132,50 @@ def getDepartmentTypeList(contentframe,departmentnamemenu,departmenttypelabel,de
     if departmentnameselected=="Income Tax":
 
         departmenttypelist=["Return","Scruitny","Notice","Appeal","Other"]
-        departmenttypemenu=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist,command=lambda event=0:getDepartmentTypeCList(contentframe,departmenttypemenu,departmentnameselected,departmenttype.get(),departmenttypeclabel,departmenttypec,departmenttypecmenu))
-        departmenttypemenu.grid(row=6,column=1,sticky=W,padx=8,pady=3)
+        AdminButtonGlobal.DEPARTMENTTYPENAMEMENU=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist,command=lambda event=0:getDepartmentTypeCList(contentframe,departmenttype.get(),departmenttypeclabel,departmentnameselected,departmenttypec))
+        AdminButtonGlobal.DEPARTMENTTYPENAMEMENU.grid(row=6,column=1,sticky=W,padx=8,pady=3)
         
     elif departmentnameselected=="GST":
 
         departmenttypelist=["Return","Notice","Other"]
-        departmenttypemenu=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist,command=lambda event=0:getDepartmentTypeCList(contentframe,departmenttypemenu,departmentnameselected,departmenttype.get(),departmenttypeclabel,departmenttypec,departmenttypecmenu))
-        departmenttypemenu.grid(row=6,column=1,sticky=W,padx=8,pady=3)
+        AdminButtonGlobal.DEPARTMENTTYPENAMEMENU=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist,command=lambda event=0:getDepartmentTypeCList(contentframe,departmenttype.get(),departmenttypeclabel,departmentnameselected,departmenttypec))
+        AdminButtonGlobal.DEPARTMENTTYPENAMEMENU.grid(row=6,column=1,sticky=W,padx=8,pady=3)
 
     elif departmentnameselected=="Accounting":
 
         departmenttypelist=["-"]
-        departmenttypemenu=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist,command=lambda event=0:getDepartmentTypeCList(contentframe,departmenttypemenu,departmentnameselected,departmenttype.get(),departmenttypeclabel,departmenttypec,departmenttypecmenu))
-        departmenttypemenu.grid(row=6,column=1,sticky=W,padx=8,pady=3)
+        AdminButtonGlobal.DEPARTMENTTYPENAMEMENU=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist,command=lambda event=0:getDepartmentTypeCList(contentframe,departmenttype.get(),departmenttypeclabel,departmentnameselected,departmenttypec))
+        AdminButtonGlobal.DEPARTMENTTYPENAMEMENU.grid(row=6,column=1,sticky=W,padx=8,pady=3)
     
     elif departmentnameselected=="Audit":
 
         departmenttypelist=["Tax Aduit","Company Audit","GST Audit","General Audit","Other Statutary Audit","Other Report"]
-        departmenttypemenu=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist,command=lambda event=0:getDepartmentTypeCList(contentframe,departmenttypemenu,departmentnameselected,departmenttype.get(),departmenttypeclabel,departmenttypec,departmenttypecmenu))
-        departmenttypemenu.grid(row=6,column=1,sticky=W,padx=8,pady=3)
+        AdminButtonGlobal.DEPARTMENTTYPENAMEMENU=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist,command=lambda event=0:getDepartmentTypeCList(contentframe,departmenttype.get(),departmenttypeclabel,departmentnameselected,departmenttypec))
+        AdminButtonGlobal.DEPARTMENTTYPENAMEMENU.grid(row=6,column=1,sticky=W,padx=8,pady=3)
     
     elif departmentnameselected=="Project":
 
         departmenttypelist=["New Project","Renewal"]
-        departmenttypemenu=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist,command=lambda event=0:getDepartmentTypeCList(contentframe,departmenttypemenu,departmentnameselected,departmenttype.get(),departmenttypeclabel,departmenttypec,departmenttypecmenu))
-        departmenttypemenu.grid(row=6,column=1,sticky=W,padx=8,pady=3)
+        AdminButtonGlobal.DEPARTMENTTYPENAMEMENU=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist,command=lambda event=0:getDepartmentTypeCList(contentframe,departmenttype.get(),departmenttypeclabel,departmentnameselected,departmenttypec))
+        AdminButtonGlobal.DEPARTMENTTYPENAMEMENU.grid(row=6,column=1,sticky=W,padx=8,pady=3)
 
     elif departmentnameselected=="Other":
 
         departmenttypelist=["-"]
-        departmenttypemenu=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist,command=lambda event=0:getDepartmentTypeCList(contentframe,departmenttypemenu,departmentnameselected,departmenttype.get(),departmenttypeclabel,departmenttypec,departmenttypecmenu))
-        departmenttypemenu.grid(row=6,column=1,sticky=W,padx=8,pady=3)
+        AdminButtonGlobal.DEPARTMENTTYPENAMEMENU=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist,command=lambda event=0:getDepartmentTypeCList(contentframe,departmenttype.get(),departmenttypeclabel,departmentnameselected,departmenttypec))
+        AdminButtonGlobal.DEPARTMENTTYPENAMEMENU.grid(row=6,column=1,sticky=W,padx=8,pady=3)
 
     elif departmentnameselected=="TDS":
 
         departmenttypelist=["Return","Notice"]
-        departmenttypemenu=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist,command=lambda event=0:getDepartmentTypeCList(contentframe,departmenttypemenu,departmentnameselected,departmenttype.get(),departmenttypeclabel,departmenttypec,departmenttypecmenu))
-        departmenttypemenu.grid(row=6,column=1,sticky=W,padx=8,pady=3)
+        AdminButtonGlobal.DEPARTMENTTYPENAMEMENU=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist,command=lambda event=0:getDepartmentTypeCList(contentframe,departmenttype.get(),departmenttypeclabel,departmentnameselected,departmenttypec))
+        AdminButtonGlobal.DEPARTMENTTYPENAMEMENU.grid(row=6,column=1,sticky=W,padx=8,pady=3)
 
     elif departmentnameselected=="TCS":
 
         departmenttypelist=["Return","Notice"]
-        departmenttypemenu=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist,command=lambda event=0:getDepartmentTypeCList(contentframe,departmenttypemenu,departmentnameselected,departmenttype.get(),departmenttypeclabel,departmenttypec,departmenttypecmenu))
-        departmenttypemenu.grid(row=6,column=1,sticky=W,padx=8,pady=3)
+        AdminButtonGlobal.DEPARTMENTTYPENAMEMENU=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist,command=lambda event=0:getDepartmentTypeCList(contentframe,departmenttype.get(),departmenttypeclabel,departmentnameselected,departmenttypec))
+        AdminButtonGlobal.DEPARTMENTTYPENAMEMENU.grid(row=6,column=1,sticky=W,padx=8,pady=3)
     
     
     return
@@ -173,29 +195,41 @@ def enterWorkIn(root):
     tkinter.Label(contentframe,text="ADD WORK-",font="Time 14").grid(row=0,column=0,sticky=W,pady=7)
 
 
-    tkinter.Label(contentframe,text="Party Name:").grid(row=2,column=0,sticky=W,pady=5)
-    partynameselected=tkinter.StringVar(contentframe)
-    partynamelist = ["-"]
-    partynameselected.set("None")
-    AdminButtonGlobal.PARTYMENU=tkinter.OptionMenu(contentframe,partynameselected,*partynamelist)
-    AdminButtonGlobal.PARTYMENU.grid(row=2,column=1,sticky=W,padx=8,pady=3)
-
-
-
+    global groupnamemenu
+    
     groupnameselected=tkinter.StringVar(contentframe)
     groupnamelist=[]
     try:
         for i in DBMSGetData.getData("GROUPANDPARTYDETAILS","GROUPNAME"):
             groupnamelist.append(i[0])
-       
     except:
         pass 
-    groupnameselected.set("None")
-    if not groupnamelist:
-        groupnamelist.append("None")
-    tkinter.Label(contentframe,text="Group Name:").grid(row=1,column=0,sticky=W,pady=5)
-    tkinter.OptionMenu(contentframe,groupnameselected,*groupnamelist,command=lambda event=0: getPARTYMENU(partynameselected,groupnameselected.get(),contentframe,panlabel,addresslabel)).grid(row=1,column=1,sticky=W,padx=8,pady=3)
+    
+    
+    
 
+    tkinter.Label(contentframe,text="Group Name:").grid(row=1,column=0,sticky=W,pady=5)
+    groupnamemenu=ttk.Combobox(contentframe,textvariable= groupnameselected)
+    groupnamemenu.grid(row=1,column=1,sticky=W,padx=8,pady=3)
+    groupnamemenu['value']=groupnamelist
+
+    groupnamemenu.set("None")
+    
+    groupnamemenu.bind("<<ComboboxSelected>>",lambda event=1:getPartyNameMenu(groupnameselected.get(),panlabel,addresslabel))
+
+
+    global partynamemenu
+
+    tkinter.Label(contentframe,text="Party Name:").grid(row=2,column=0,sticky=W,pady=5)
+    partynameselected=tkinter.StringVar(contentframe)
+    partynamelist = ["All"]
+    partynamemenu=ttk.Combobox(contentframe,textvariable=partynameselected)
+    partynamemenu.grid(row=2,column=1,sticky=W,padx=8,pady=3)
+    partynamemenu['value']=partynamelist
+    partynamemenu.set("None")
+    
+
+    partynamemenu.bind("<<ComboboxSelected>>",lambda event=1: getPANAdress(partynameselected.get(),groupnameselected.get(),panlabel,addresslabel))
     
     
     tkinter.Label(contentframe,text="PAN No:").grid(row=3,column=0,sticky=W,pady=5)
@@ -213,8 +247,8 @@ def enterWorkIn(root):
     departmentnamelist = ["Income Tax","Accounting","GST","Audit","Project","TDS","TCS","Other"]
     departmentnameselected.set("None")
     tkinter.Label(contentframe,text="Department:").grid(row=5,column=0,sticky=W,pady=5)
-    departmentnamemenu=tkinter.OptionMenu(contentframe,departmentnameselected,*departmentnamelist,command=lambda event=0:getDepartmentTypeList(contentframe,departmentnamemenu,departmenttypelabel,departmenttypeclabel,departmentnameselected.get(),departmenttype,departmenttypec,departmenttypemenu,departmenttypecmenu))
-    departmentnamemenu.grid(row=5,column=1,sticky=W,padx=8,pady=3)
+    AdminButtonGlobal.DEPARTMENTNAMEMENU=tkinter.OptionMenu(contentframe,departmentnameselected,*departmentnamelist,command=lambda event=0:getDepartmentTypeList(contentframe,departmenttype,departmentnameselected.get(),departmenttypelabel,departmenttypeclabel,departmenttypec))
+    AdminButtonGlobal.DEPARTMENTNAMEMENU.grid(row=5,column=1,sticky=W,padx=8,pady=3)
 
 
     departmenttypelabel= tkinter.Label(contentframe,text="-")
@@ -222,8 +256,8 @@ def enterWorkIn(root):
     departmenttype=tkinter.StringVar(contentframe)
     departmenttypelist = ["-"]
     departmenttype.set("None")
-    departmenttypemenu=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist)
-    departmenttypemenu.grid(row=6,column=1,sticky=W,padx=8,pady=3)
+    AdminButtonGlobal.DEPARTMENTTYPENAMEMENU=tkinter.OptionMenu(contentframe,departmenttype,*departmenttypelist)
+    AdminButtonGlobal.DEPARTMENTTYPENAMEMENU.grid(row=6,column=1,sticky=W,padx=8,pady=3)
 
 
     departmenttypeclabel = tkinter.Label(contentframe,text="-")
@@ -231,8 +265,8 @@ def enterWorkIn(root):
     departmenttypec=tkinter.StringVar(contentframe)
     departmenttypeclist = ["-"]
     departmenttypec.set("None")
-    departmenttypecmenu=tkinter.OptionMenu(contentframe,departmenttypec,*departmenttypeclist)
-    
+    AdminButtonGlobal.DEPARTMENTTYPECNAMEMENU=tkinter.OptionMenu(contentframe,departmenttypec,*departmenttypeclist)
+       
 
     #-----------------------------------department-end ----------------------------------------------------------------
 

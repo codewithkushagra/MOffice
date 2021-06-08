@@ -1,6 +1,7 @@
 import tkinter
 from tkinter import *
 from tkinter.constants import *
+from tkinter import ttk
 import StaticTable
 import globalvalues
 import AdminButtonGlobal
@@ -50,13 +51,20 @@ def allotWorkList(root):
     StaticTable.drawTable(AdminButtonGlobal.CURRENTTABLEFRAME,DBMSGetData.getAllData("RECEIVEDWORK"),True)
 
 
+    
+    
+
+  
 
     articlenameselected=tkinter.StringVar(contentframe)
-    articlenameselected.set("All")
-    tkinter.Label(contentframe,text="Username:").grid(row=1,column=0,sticky=W)
-    tkinter.OptionMenu(contentframe,articlenameselected,*articlenamelist,command=lambda event=1:getUserWork(articlenameselected.get(),contentframe)).grid(row=1,column=1,sticky=W)
-
     
+    tkinter.Label(contentframe,text="Username:").grid(row=1,column=0,sticky=W)
+    articlenamemenu=ttk.Combobox(contentframe,textvariable=articlenameselected)
+    articlenamemenu.grid(row=1,column=1,sticky=W)
+    articlenamemenu['value']=articlenamelist
+    articlenamemenu.current(0)
+
+    articlenamemenu.bind("<<ComboboxSelected>>",lambda event=1:getUserWork(articlenameselected.get(),contentframe))
 
     AdminButtonGlobal.CURRENTFRAME=contentframe
 
