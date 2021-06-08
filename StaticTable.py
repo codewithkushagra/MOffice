@@ -6,9 +6,9 @@ import FrameSwitcher
 import globalvalues
 import DBMSGetData
 
-def drawTable(root,table,adminroot=Frame,buttonframe=Frame,allotnow=False):
+def drawTable(root,table,allotnow=False):
     def data():
-         print(allotnow)
+         
          Label(frame,text="Group Name",borderwidth=1,bg="white",font="Time 14",relief=RAISED).grid(row=0,ipadx=10,ipady=10,column=0,sticky=NSEW)
          Label(frame,text="Party Name",borderwidth=1,bg="white",font="Time 14",relief=RAISED).grid(row=0,ipadx=10,ipady=10,column=1,sticky=NSEW)
          Label(frame,text="PAN No",borderwidth=1,bg="white",font="Time 14",relief=RAISED).grid(row=0,ipadx=10,ipady=10,column=2,sticky=NSEW)

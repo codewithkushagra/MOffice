@@ -9,31 +9,31 @@ import AdminButtonGlobal
 
 
 
-def getUserWork(workstatusselected,tableframe,articlenameselected,contentframe):
+def getUserWork(workstatusselected,articlenameselected,contentframe):
 
-    tableframe.destroy()
+    AdminButtonGlobal.CURRENTTABLEFRAME.destroy()
 
     if workstatusselected=="All" and articlenameselected!="All":
 
-        tableframe=tkinter.Frame(contentframe)
-        tableframe.grid(row=4,column=0,sticky=W,ipadx=globalvalues.WIDTH-300,ipady=globalvalues.HEIGHT-200,columnspan=25)
-        StaticTable.drawTable(tableframe,DBMSGetData.getAllDataOfColumn("RECEIVEDWORK","ALLOTED",articlenameselected))
+        AdminButtonGlobal.CURRENTTABLEFRAME=tkinter.Frame(contentframe)
+        AdminButtonGlobal.CURRENTTABLEFRAME.grid(row=4,column=0,sticky=W,ipadx=globalvalues.WIDTH-300,ipady=globalvalues.HEIGHT-200,columnspan=25)
+        StaticTable.drawTable(AdminButtonGlobal.CURRENTTABLEFRAME,DBMSGetData.getAllDataOfColumn("RECEIVEDWORK","ALLOTED",articlenameselected))
 
     elif workstatusselected=="All" and articlenameselected=="All":
     
-        tableframe=tkinter.Frame(contentframe)
-        tableframe.grid(row=4,column=0,sticky=W,ipadx=globalvalues.WIDTH-300,ipady=globalvalues.HEIGHT-200,columnspan=25)
-        StaticTable.drawTable(tableframe,DBMSGetData.getAllData("RECEIVEDWORK"))
+        AdminButtonGlobal.CURRENTTABLEFRAME=tkinter.Frame(contentframe)
+        AdminButtonGlobal.CURRENTTABLEFRAME.grid(row=4,column=0,sticky=W,ipadx=globalvalues.WIDTH-300,ipady=globalvalues.HEIGHT-200,columnspan=25)
+        StaticTable.drawTable(AdminButtonGlobal.CURRENTTABLEFRAME,DBMSGetData.getAllData("RECEIVEDWORK"))
 
     elif workstatusselected!="All" and articlenameselected=="All":
-        tableframe=tkinter.Frame(contentframe)
-        tableframe.grid(row=4,column=0,sticky=W,ipadx=globalvalues.WIDTH-300,ipady=globalvalues.HEIGHT-200,columnspan=25)
-        StaticTable.drawTable(tableframe,DBMSGetData.getAllDataOfColumn("RECEIVEDWORK","WORKSTATUS",workstatusselected))
+        AdminButtonGlobal.CURRENTTABLEFRAME=tkinter.Frame(contentframe)
+        AdminButtonGlobal.CURRENTTABLEFRAME.grid(row=4,column=0,sticky=W,ipadx=globalvalues.WIDTH-300,ipady=globalvalues.HEIGHT-200,columnspan=25)
+        StaticTable.drawTable(AdminButtonGlobal.CURRENTTABLEFRAME,DBMSGetData.getAllDataOfColumn("RECEIVEDWORK","WORKSTATUS",workstatusselected))
 
     else:
-        tableframe=tkinter.Frame(contentframe)
-        tableframe.grid(row=4,column=0,sticky=W,ipadx=globalvalues.WIDTH-300,ipady=globalvalues.HEIGHT-200,columnspan=25)
-        StaticTable.drawTable(tableframe,DBMSGetData.getAllDataByTwoColumn("RECEIVEDWORK","ALLOTED","WORKSTATUS",articlenameselected,workstatusselected))
+        AdminButtonGlobal.CURRENTTABLEFRAME=tkinter.Frame(contentframe)
+        AdminButtonGlobal.CURRENTTABLEFRAME.grid(row=4,column=0,sticky=W,ipadx=globalvalues.WIDTH-300,ipady=globalvalues.HEIGHT-200,columnspan=25)
+        StaticTable.drawTable(AdminButtonGlobal.CURRENTTABLEFRAME,DBMSGetData.getAllDataByTwoColumn("RECEIVEDWORK","ALLOTED","WORKSTATUS",articlenameselected,workstatusselected))
     
     return
 
@@ -58,9 +58,9 @@ def todaysWorkList(root):
         pass 
 
 
-    tableframe=tkinter.Frame(contentframe)
-    tableframe.grid(row=4,column=0,sticky=W,ipadx=globalvalues.WIDTH-300,ipady=globalvalues.HEIGHT-200,columnspan=25)
-    StaticTable.drawTable(tableframe,DBMSGetData.getAllData("RECEIVEDWORK"))
+    AdminButtonGlobal.CURRENTTABLEFRAME=tkinter.Frame(contentframe)
+    AdminButtonGlobal.CURRENTTABLEFRAME.grid(row=4,column=0,sticky=W,ipadx=globalvalues.WIDTH-300,ipady=globalvalues.HEIGHT-200,columnspan=25)
+    StaticTable.drawTable(AdminButtonGlobal.CURRENTTABLEFRAME,DBMSGetData.getAllData("RECEIVEDWORK"))
 
 
 
@@ -68,14 +68,14 @@ def todaysWorkList(root):
     workstatuslist = ["All","Complete","Pending","Past due date"]
     workstatusselected.set("All")
     tkinter.Label(contentframe,text="Work Status:").grid(row=2,column=0,sticky=W)
-    tkinter.OptionMenu(contentframe,workstatusselected,*workstatuslist,command=lambda event=1:getUserWork(workstatusselected.get(),tableframe,articlenameselected.get(),contentframe)).grid(row=2,column=1,sticky=W)
+    tkinter.OptionMenu(contentframe,workstatusselected,*workstatuslist,command=lambda event=1:getUserWork(workstatusselected.get(),articlenameselected.get(),contentframe)).grid(row=2,column=1,sticky=W)
 
 
 
     articlenameselected=tkinter.StringVar(contentframe)
     articlenameselected.set("All")
     tkinter.Label(contentframe,text="Username:").grid(row=1,column=0,sticky=W)
-    tkinter.OptionMenu(contentframe,articlenameselected,*articlenamelist,command=lambda event=1:getUserWork(workstatusselected.get(),tableframe,articlenameselected.get(),contentframe)).grid(row=1,column=1,sticky=W)
+    tkinter.OptionMenu(contentframe,articlenameselected,*articlenamelist,command=lambda event=1:getUserWork(workstatusselected.get(),articlenameselected.get(),contentframe)).grid(row=1,column=1,sticky=W)
 
 
     AdminButtonGlobal.CURRENTFRAME=contentframe

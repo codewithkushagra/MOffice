@@ -3,6 +3,7 @@ from tkinter.constants import *
 
 import WorkEntry
 import AdminButtons
+import AdminButtonGlobal
 import globalvalues
 
 
@@ -11,8 +12,17 @@ def admin(root):
     adminpageframe=tkinter.Frame(root)
     adminpageframe.grid(row=0, column=0, sticky=NSEW,ipadx=globalvalues.WIDTH,ipady=globalvalues.HEIGHT)
 
-    
-    
+    contentframe=tkinter.Frame(adminpageframe)
+    contentframe.grid(row=0,column=1,ipadx=globalvalues.HEIGHT,ipady=globalvalues.WIDTH-100)
+
+    AdminButtonGlobal.CURRENTFRAME=contentframe
+
+    buttonframe=tkinter.Frame(adminpageframe)
+    tkinter.Frame(buttonframe,relief=RIDGE,borderwidth=2,bg="red").grid(row=0,column=0,rowspan=40,ipady=globalvalues.HEIGHT,ipadx=100)
+    buttonframe.grid(row=0,column=0,rowspan=40,sticky=N)
+
+
+    AdminButtons.buttonCreate(buttonframe,adminpageframe)
     
     WorkEntry.enterWork(adminpageframe)
 

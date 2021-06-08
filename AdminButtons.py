@@ -7,6 +7,7 @@ import AdminButtonGlobal
 
 
 def buttonCreate(buttonframe,root):
+    
     workentrybutton=tkinter.Button(buttonframe,text="Work Entry",width=10,bg="white",border=0,command=lambda :FrameSwitcher.recreateWorkEntry(AdminButtonGlobal.CURRENTFRAME,root))
     workentrybutton.grid(row=0,column=0,padx=5,pady=10,sticky=NSEW)
     listbutton=tkinter.Button(buttonframe,text="Work List",width=10,bg="white",border=0,command=lambda :FrameSwitcher.recreateListPage(AdminButtonGlobal.CURRENTFRAME,root))

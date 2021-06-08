@@ -4,7 +4,7 @@ from tkinter import messagebox
 import globalvalues
 import DBMSGetData
 import DBMSSaveData
-import AdminButtons
+import AdminButtonGlobal
 import FrameSwitcher
 
 
@@ -19,9 +19,9 @@ def getPANAdress(partynameselected,groupnameselected,panlabel,addresslabel):
 
 
 
-def getPartyNameMenu(partynamemenu,partynameselected,groupnameselected,contentframe,panlabel,addresslabel):
+def getPARTYMENU(partynameselected,groupnameselected,contentframe,panlabel,addresslabel):
     
-    partynamemenu.destroy()    
+    AdminButtonGlobal.PARTYMENU.destroy()    
     partynamelist = []
     
     if not partynamelist:
@@ -32,18 +32,18 @@ def getPartyNameMenu(partynamemenu,partynameselected,groupnameselected,contentfr
     panlabel["text"]="-"
     addresslabel["text"]="-"
     partynameselected.set("None")
-    partynamemenu=tkinter.OptionMenu(contentframe,partynameselected,*partynamelist,command=lambda event=0:getPANAdress(partynameselected.get(),groupnameselected,panlabel,addresslabel))
-    partynamemenu.grid(row=2,column=1,sticky=W,padx=8,pady=3)
+    AdminButtonGlobal.PARTYMENU=tkinter.OptionMenu(contentframe,partynameselected,*partynamelist,command=lambda event=0:getPANAdress(partynameselected.get(),groupnameselected,panlabel,addresslabel))
+    AdminButtonGlobal.PARTYMENU.grid(row=2,column=1,sticky=W,padx=8,pady=3)
     
     return
 
 
 
-def saveWorkEntry(buttonframe,contentframe,root,departmenttype,departmenttypec,pannumber,departmentnameselected,recievedate,financialyear,assessmentyear):
+def saveWorkEntry(contentframe,root,departmenttype,departmenttypec,pannumber,departmentnameselected,recievedate,financialyear,assessmentyear):
     try:
         workstatus="Pending"
         DBMSSaveData.insertWorkRecord(departmenttype,departmenttypec,pannumber,departmentnameselected,recievedate,financialyear,assessmentyear,workstatus)
-        FrameSwitcher.recreateWorkEntrySection(contentframe,root,buttonframe)
+        FrameSwitcher.recreateWorkEntrySection(contentframe,root)
         messagebox.showinfo("Saved", "New work record have been added")
         
     except:
@@ -177,8 +177,8 @@ def enterWorkIn(root):
     partynameselected=tkinter.StringVar(contentframe)
     partynamelist = ["-"]
     partynameselected.set("None")
-    partynamemenu=tkinter.OptionMenu(contentframe,partynameselected,*partynamelist)
-    partynamemenu.grid(row=2,column=1,sticky=W,padx=8,pady=3)
+    AdminButtonGlobal.PARTYMENU=tkinter.OptionMenu(contentframe,partynameselected,*partynamelist)
+    AdminButtonGlobal.PARTYMENU.grid(row=2,column=1,sticky=W,padx=8,pady=3)
 
 
 
@@ -194,7 +194,7 @@ def enterWorkIn(root):
     if not groupnamelist:
         groupnamelist.append("None")
     tkinter.Label(contentframe,text="Group Name:").grid(row=1,column=0,sticky=W,pady=5)
-    tkinter.OptionMenu(contentframe,groupnameselected,*groupnamelist,command=lambda event=0: getPartyNameMenu(partynamemenu,partynameselected,groupnameselected.get(),contentframe,panlabel,addresslabel)).grid(row=1,column=1,sticky=W,padx=8,pady=3)
+    tkinter.OptionMenu(contentframe,groupnameselected,*groupnamelist,command=lambda event=0: getPARTYMENU(partynameselected,groupnameselected.get(),contentframe,panlabel,addresslabel)).grid(row=1,column=1,sticky=W,padx=8,pady=3)
 
     
     
@@ -248,12 +248,8 @@ def enterWorkIn(root):
     tkinter.Label(contentframe,text="Assessment Year:").grid(row=10,column=0,sticky=W,pady=5)
     tkinter.Entry(contentframe, bd=1 ,width=20,textvariable=assessmentyear).grid(row=10,column=1,sticky=W,padx=8,pady=3)
 
-    tkinter.Button(contentframe,text="Save",command=lambda:saveWorkEntry(buttonframe,contentframe,root,departmenttype.get(),departmenttypec.get(),panlabel["text"],departmentnameselected.get(),recievedate.get(),financialyear.get(),assessmentyear.get())).grid(row=11,columnspan=2,pady=20)
+    tkinter.Button(contentframe,text="Save",command=lambda:saveWorkEntry(contentframe,root,departmenttype.get(),departmenttypec.get(),panlabel["text"],departmentnameselected.get(),recievedate.get(),financialyear.get(),assessmentyear.get())).grid(row=11,columnspan=2,pady=20)
 
-    buttonframe=tkinter.Frame(root)
-    tkinter.Frame(buttonframe,relief=RIDGE,borderwidth=2,bg="red").grid(row=0,column=0,rowspan=40,ipady=globalvalues.HEIGHT,ipadx=100)
-    buttonframe.grid(row=0,column=0,rowspan=40,sticky=N)
-
-    AdminButtons.buttonCreate(buttonframe,contentframe,root)
+    AdminButtonGlobal.CURRENTFRAME=contentframe
 
     return
