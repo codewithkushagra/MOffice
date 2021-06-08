@@ -5,7 +5,28 @@ import StaticTable
 
 import AdminButtons
 import DBMSGetData
+import AdminButtonGlobal
 import globalvalues
+
+
+def getUserWork(tableframe,articlenameselected,contentframe):
+
+    tableframe.destroy()
+
+    if articlenameselected!="All":
+
+        tableframe=tkinter.Frame(contentframe)
+        tableframe.grid(row=4,column=0,sticky=W,ipadx=globalvalues.WIDTH-300,ipady=globalvalues.HEIGHT-200,columnspan=25)
+        StaticTable.drawTable(tableframe,DBMSGetData.getAllDataOfColumn("RECEIVEDWORK","ALLOTED",articlenameselected))
+
+    else:
+    
+        tableframe=tkinter.Frame(contentframe)
+        tableframe.grid(row=4,column=0,sticky=W,ipadx=globalvalues.WIDTH-300,ipady=globalvalues.HEIGHT-200,columnspan=25)
+        StaticTable.drawTable(tableframe,DBMSGetData.getAllData("RECEIVEDWORK"))
+    
+    return
+
 
 
 def workDiaryList(root):
@@ -17,11 +38,12 @@ def workDiaryList(root):
 
     tkinter.Label(contentframe,text="Diary Work-",font="Time 14").grid(row=0,column=0,sticky=W,pady=7)
 
-    groupnameselected=tkinter.StringVar(contentframe)
-    groupnamelist = ["sample1","sample1"]
-    groupnameselected.set("None")
-    tkinter.Label(contentframe,text="Article Name:").grid(row=1,column=0,sticky=W)
-    tkinter.OptionMenu(contentframe,groupnameselected,*groupnamelist).grid(row=1,column=1,sticky=W)
+    articlenamelist=["All"]
+    try:
+        for i in DBMSGetData.getData("TEAMREGISTER","USERNAME"):
+            articlenamelist.append(i[0])
+    except:
+        pass 
 
 
     tableframe=tkinter.Frame(contentframe)
@@ -29,11 +51,15 @@ def workDiaryList(root):
     StaticTable.drawTable(tableframe,DBMSGetData.getAllData("RECEIVEDWORK"))
 
 
-    buttonframe=tkinter.Frame(root)
-    tkinter.Frame(buttonframe,relief=RIDGE,borderwidth=2,bg="red").grid(row=0,column=0,rowspan=40,ipady=globalvalues.HEIGHT,ipadx=100)
-    buttonframe.grid(row=0,column=0,rowspan=40,sticky=N)
 
-    AdminButtons.buttonCreate(buttonframe,contentframe,root)
+
+    articlenameselected=tkinter.StringVar(contentframe)
+    articlenameselected.set("All")
+    tkinter.Label(contentframe,text="Username:").grid(row=1,column=0,sticky=W)
+    tkinter.OptionMenu(contentframe,articlenameselected,*articlenamelist,command=lambda event=1:getUserWork(tableframe,articlenameselected.get(),contentframe)).grid(row=1,column=1,sticky=W)
+
+
+    AdminButtonGlobal.CURRENTFRAME=contentframe
 
 
     return

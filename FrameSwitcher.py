@@ -34,75 +34,75 @@ def recreateAdminPage(currentframe,root):
     return
 
 
-def recreateListPage(currentframe,root,buttonframe):
+def recreateListPage(currentframe,root):
     currentframe.destroy()
-    buttonframe.destroy()
+    
     ListPage.workList(root)
     return
 
 
-def recreateWorkEntry(currentframe,root,buttonframe):
+def recreateWorkEntry(currentframe,root):
     currentframe.destroy()
-    buttonframe.destroy()
+    
     WorkEntry.enterWork(root)
     return
 
     
-def recreateReportsPage(currentframe,root,buttonframe):
+def recreateReportsPage(currentframe,root):
     currentframe.destroy()
-    buttonframe.destroy()
+    
     ReportsPage.reportList(root)
     
     return
 
 
-def recreateAllotWorkPage(currentframe,root,buttonframe):
+def recreateAllotWorkPage(currentframe,root):
     currentframe.destroy()
-    buttonframe.destroy()
+    
     AllotWorkPage.allotWorkList(root)
     
     return
 
-def recreateWorkEntrySection(currentframe,root,buttonframe):
+def recreateWorkEntrySection(currentframe,root):
     currentframe.destroy()
-    buttonframe.destroy()
+    
     WorkEntrySection.enterWorkIn(root)
     
     return
 
-def recreateTodaysWorkPage(currentframe,root,buttonframe):
+def recreateTodaysWorkPage(currentframe,root):
     currentframe.destroy()
-    buttonframe.destroy()
+    
     TodaysWorkPage.todaysWorkList(root)
     
     return
 
-def recreateNewGroup(currentframe,root,buttonframe):
+def recreateNewGroup(currentframe,root):
     currentframe.destroy()
-    buttonframe.destroy()
+    
     NewGroup.newGroup(root)
     
     return
 
-def recreateNewParty(currentframe,root,buttonframe):
+def recreateNewParty(currentframe,root):
     currentframe.destroy()
-    buttonframe.destroy()
+    
     NewParty.newParty(root)
     
     return
 
 
-def recreateWorkDiaryPage(currentframe,root,buttonframe):
+def recreateWorkDiaryPage(currentframe,root):
     currentframe.destroy()
-    buttonframe.destroy()
+    
     WorkDiaryPage.workDiaryList(root)
     
     return
 
 
-def recreateRegistrationPage(currentframe,root,buttonframe):
+def recreateRegistrationPage(currentframe,root):
     currentframe.destroy()
-    buttonframe.destroy()
+    
     RegistrationPage.registeruser(root)
     
     return

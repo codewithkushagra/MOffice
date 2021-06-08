@@ -2,9 +2,11 @@ import tkinter
 from tkinter.constants import *
 from tkinter import messagebox
 import StaticTable
+import FrameSwitcher
 import AdminButtons
 import DBMSGetData
 import globalvalues
+import AdminButtonGlobal
 
 
 
@@ -181,8 +183,7 @@ def workList(root):
     partynamemenu=tkinter.OptionMenu(contentframe,partynameselected,*partynamelist)
     partynamemenu.grid(row=2,column=1,sticky=W,padx=8,pady=3)
 
-
-
+    
     groupnameselected=tkinter.StringVar(contentframe)
     groupnamelist=["All"]
     try:
@@ -190,6 +191,9 @@ def workList(root):
             groupnamelist.append(i[0])
     except:
         pass 
+    
+    
+    
     groupnameselected.set("All")
 
     tkinter.Label(contentframe,text="Group Name:").grid(row=1,column=0,sticky=W,pady=5)
@@ -207,9 +211,7 @@ def workList(root):
     StaticTable.drawTable(tableframe,DBMSGetData.getAllData("RECEIVEDWORK"))
 
 
-    buttonframe=tkinter.Frame(root)
-    tkinter.Frame(buttonframe,relief=RIDGE,borderwidth=2,bg="red").grid(row=0,column=0,rowspan=40,ipady=globalvalues.HEIGHT,ipadx=100)
-    buttonframe.grid(row=0,column=0,rowspan=40,sticky=N)
+    AdminButtonGlobal.CURRENTFRAME=contentframe    
 
-    AdminButtons.buttonCreate(buttonframe,contentframe,root)
+    
     return

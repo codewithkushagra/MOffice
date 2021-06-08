@@ -24,6 +24,8 @@ def getPartyNameMenu(partynamemenu,partynameselected,groupnameselected,contentfr
     partynamemenu.destroy()    
     partynamelist = []
     
+    if not partynamelist:
+        partynamelist.append("None")
     
     for i in DBMSGetData.getWhereData("GROUPANDPARTYDETAILS","PARTYNAME","GROUPNAME",groupnameselected):
         partynamelist.append(i[0])
@@ -189,7 +191,8 @@ def enterWorkIn(root):
     except:
         pass 
     groupnameselected.set("None")
-
+    if not groupnamelist:
+        groupnamelist.append("None")
     tkinter.Label(contentframe,text="Group Name:").grid(row=1,column=0,sticky=W,pady=5)
     tkinter.OptionMenu(contentframe,groupnameselected,*groupnamelist,command=lambda event=0: getPartyNameMenu(partynamemenu,partynameselected,groupnameselected.get(),contentframe,panlabel,addresslabel)).grid(row=1,column=1,sticky=W,padx=8,pady=3)
 

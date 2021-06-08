@@ -3,9 +3,31 @@ from tkinter import *
 from tkinter.constants import *
 import StaticTable
 import globalvalues
-import AdminButtons
+import AdminButtonGlobal
 
 import DBMSGetData
+
+
+def getUserWork(tableframe,articlenameselected,contentframe):
+
+    tableframe.destroy()
+
+    if articlenameselected!="All":
+
+        tableframe=tkinter.Frame(contentframe)
+        tableframe.grid(row=4,column=0,sticky=W,ipadx=globalvalues.WIDTH-300,ipady=globalvalues.HEIGHT-200,columnspan=25)
+        StaticTable.drawTable(tableframe,DBMSGetData.getAllDataOfColumn("RECEIVEDWORK","ALLOTED",articlenameselected))
+
+    else:
+    
+        tableframe=tkinter.Frame(contentframe)
+        tableframe.grid(row=4,column=0,sticky=W,ipadx=globalvalues.WIDTH-300,ipady=globalvalues.HEIGHT-200,columnspan=25)
+        StaticTable.drawTable(tableframe,DBMSGetData.getAllData("RECEIVEDWORK"))
+    
+    return
+
+
+
 
 def allotWorkList(root):
 
@@ -14,28 +36,28 @@ def allotWorkList(root):
 
     tkinter.Label(contentframe,text="Allot Work-",font="Time 14").grid(row=0,column=0,sticky=W,pady=10)
 
-    articlenameselected=tkinter.StringVar(contentframe)
-    articlenamelist = ["Income Tax","Accounting","GST","Audit","Project","TDS","TCS","Other"]
-    articlenameselected.set("None")
-    tkinter.Label(contentframe,text="Article Name:").grid(row=1,column=0,sticky=W)
-    tkinter.OptionMenu(contentframe,articlenameselected,*articlenamelist).grid(row=1,column=1,sticky=W)
+    articlenamelist=["All"]
+    try:
+        for i in DBMSGetData.getData("TEAMREGISTER","USERNAME"):
+            articlenamelist.append(i[0])
+    except:
+        pass 
 
-
-    workstatusselected=tkinter.StringVar(contentframe)
-    workstatuslist = ["complete","pending","past due date"]
-    workstatusselected.set("None")
-    tkinter.Label(contentframe,text="Work Status:").grid(row=2,column=0,sticky=W)
-    tkinter.OptionMenu(contentframe,workstatusselected,*workstatuslist).grid(row=2,column=1,sticky=W)
-
+    
 
     tableframe=tkinter.Frame(contentframe)
     tableframe.grid(row=4,column=0,sticky=W,ipadx=globalvalues.WIDTH-300,ipady=globalvalues.HEIGHT-200,columnspan=25)
-    StaticTable.drawTable(tableframe,DBMSGetData.getAllData("RECEIVEDWORK"))
+    StaticTable.drawTable(tableframe,DBMSGetData.getAllData("RECEIVEDWORK"),root,True)
 
-    buttonframe=tkinter.Frame(root)
-    tkinter.Frame(buttonframe,relief=RIDGE,borderwidth=2,bg="red").grid(row=0,column=0,rowspan=40,ipady=globalvalues.HEIGHT,ipadx=100)
-    buttonframe.grid(row=0,column=0,rowspan=40,sticky=N)
 
-    AdminButtons.buttonCreate(buttonframe,contentframe,root)
+
+    articlenameselected=tkinter.StringVar(contentframe)
+    articlenameselected.set("All")
+    tkinter.Label(contentframe,text="Username:").grid(row=1,column=0,sticky=W)
+    tkinter.OptionMenu(contentframe,articlenameselected,*articlenamelist,command=lambda event=1:getUserWork(tableframe,articlenameselected.get(),contentframe)).grid(row=1,column=1,sticky=W)
+
+    
+
+    AdminButtonGlobal.CURRENTFRAME=contentframe
 
     return

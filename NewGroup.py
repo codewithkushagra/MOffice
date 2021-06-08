@@ -2,7 +2,7 @@ import tkinter
 from tkinter.constants import *
 from tkinter import messagebox
 
-import AdminButtons
+import AdminButtonGlobal
 import DBMSSaveData
 import globalvalues
 
@@ -47,11 +47,6 @@ def newGroup(root):
     
     tkinter.Button(contentframe,text="Save",command=lambda:saveNewGroup(groupname.get(),partyname.get(),pannumber.get(),address.get(),groupname,partyname,pannumber,address ) ).grid(row=5,columnspan=2,pady=20)
 
-    buttonframe=tkinter.Frame(root)
-    tkinter.Frame(buttonframe,relief=RIDGE,borderwidth=2,bg="red").grid(row=0,column=0,rowspan=40,ipady=globalvalues.HEIGHT,ipadx=100)
-    buttonframe.grid(row=0,column=0,rowspan=40,sticky=N)
-
-
-    AdminButtons.buttonCreate(buttonframe,contentframe,root)
+    AdminButtonGlobal.CURRENTFRAME=contentframe
 
     return

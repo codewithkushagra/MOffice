@@ -4,7 +4,7 @@ from tkinter import messagebox
 
 import DBMSSaveData
 import DBMSGetData
-import AdminButtons
+import AdminButtonGlobal
 import globalvalues
 
 
@@ -67,9 +67,6 @@ def newParty(root):
 
     tkinter.Button(contentframe,text="Save",command=lambda:saveNewParty(groupnameselected.get(),partyname.get(),pannumber.get(),address.get(),groupnameselected,partyname,pannumber,address ) ).grid(row=5,columnspan=2,pady=20)
 
-    buttonframe=tkinter.Frame(root)
-    tkinter.Frame(buttonframe,relief=RIDGE,borderwidth=2,bg="red").grid(row=0,column=0,rowspan=40,ipady=globalvalues.HEIGHT,ipadx=100)
-    buttonframe.grid(row=0,column=0,rowspan=40,sticky=N)
+    AdminButtonGlobal.CURRENTFRAME=contentframe
 
-    AdminButtons.buttonCreate(buttonframe,contentframe,root)
     return

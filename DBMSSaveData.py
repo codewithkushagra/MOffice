@@ -16,7 +16,7 @@ def createTables():
     db.commit()
     cursor.execute("CREATE TABLE GROUPANDPARTYDETAILS(GROUPNAME TEXT,PARTYNAME TEXT,PANNUMBER TEXT,PARTYADDRESS TEXT)")
     cursor.execute("CREATE TABLE RECEIVEDWORK(WORKID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,PANNUMBER TEXT,DEPARTMENT TEXT,TYPE TEXT,TYPEC TEXT,AY TEXT,DATEOFRECEIVING TEXT,ESTIMATEDATE TEXT,PRIORITY TEXT,NATUREOFWORK TEXT,FY TEXT,WORKSTATUS TEXT,ALLOTED TEXT,COMPELETIONDATE TEXT)")
-    cursor.execute("CREATE TABLE TEAMREGISTER(ID TEXT,NAME TEXT,PHONE INTEGER,AGE INTEGER,GENDER TEXT,ADDRESS TEXT,HIREDATE TEXT,PASSWORD TEXT);")
+    cursor.execute("CREATE TABLE TEAMREGISTER(USERNAME TEXT,NAME TEXT,PASSWORD TEXT,STAFFDEGINATION TEXT,EMAIL TEXT,PHONE INTEGER);")
     cursor.execute("CREATE TABLE GENERALUPDATE(PRIME INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,WORKID INTEGER ,UPDATEOFWORK TEXT,Date TEXT)")
 
     cursor.close()
@@ -46,6 +46,21 @@ def insertWorkRecord(departmenttype,departmenttypec,pannumber,departmentnamesele
     db.close()
     return
 
+
+def insertTeam(username,name,password,staffdegination,email,phone):
+    db=sqlite3.connect('mybd.db')
+    cursor=db.cursor()
+
+    cursor.execute("INSERT INTO TEAMREGISTER(USERNAME,NAME,PASSWORD,STAFFDEGINATION,EMAIL,PHONE)VALUES(?,?,?,?,?,?)",(username,name,password,staffdegination,email,phone))
+    db.commit()
+
+    cursor.close()
+    db.close()
+    return
+    
+    
+    
+    return
 
 
 # createTables()
